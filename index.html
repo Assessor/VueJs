@@ -51,9 +51,12 @@
                     </ul>
 
                     <div class="phone-block">
-                        <p
-                                v-if="phoneVisibility">
-                            {{ car.phone }}</p>
+                        <transition name="phone">
+                            <p v-if="phoneVisibility">
+                                {{ car.phone }}
+                            </p>
+                        </transition>
+
                     </div>
 
                     <button class="btn btn-outline-success mr-3"
@@ -79,54 +82,58 @@
                             'list-group-item-success': log.type === 'Ok'
                         }"
                 >
-                    {{ log.text }} - {{ car.name }}, {{ log.date | date }}
+                    {{ log.text }}, {{ log.date | date }}
                 </li>
             </ul>
         </div>
     </div>
 
-    <div class="modal fade show" tabindex="-1" role="dialog" v-if="modalVisibility">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Запрос на покупку автомобиля</h5>
-                    <button
-                            type="button"
-                            class="close"
-                            data-dismiss="modal"
-                            aria-label="Close"
-                            @click="modalVisibility = false"
-                    >
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Текущая модель - <strong>{{ car.name }}</strong></p>
-                    <ul>
-                        <li>Model - <strong>{{ car.model }}</strong></li>
-                        <li>Year - <strong>{{ car.year }}</strong></li>
-                        <li>Owner - <strong>{{ car.owner }}</strong></li>
-                    </ul>
-                </div>
-                <div class="modal-footer">
-                    <button
-                            type="button"
-                            class="btn btn-primary"
-                            @click="newOrder"
-                    >Купить</button>
+    <transition name="modal">
+        <div class="modal fade show" tabindex="-1" role="dialog" v-if="modalVisibility">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Запрос на покупку автомобиля</h5>
+                        <button
+                                type="button"
+                                class="close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                                @click="modalVisibility = false"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Текущая модель - <strong>{{ car.name }}</strong></p>
+                        <ul>
+                            <li>Model - <strong>{{ car.model }}</strong></li>
+                            <li>Year - <strong>{{ car.year }}</strong></li>
+                            <li>Owner - <strong>{{ car.owner }}</strong></li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                                type="button"
+                                class="btn btn-primary"
+                                @click="newOrder"
+                        >Купить</button>
 
-                    <button
-                            type="button"
-                            class="btn btn-secondary"
-                            data-dismiss="modal"
-                            @click="cancelOrder"
-                    >Отмена</button>
+                        <button
+                                type="button"
+                                class="btn btn-secondary"
+                                data-dismiss="modal"
+                                @click="cancelOrder"
+                        >Отмена</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </transition>
 
-    <div class="modal-backdrop fade show" v-if="modalVisibility"></div>
+    <transition name="fade">
+        <div class="modal-backdrop fade show" v-if="modalVisibility"></div>
+    </transition>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>

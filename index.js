@@ -25,11 +25,11 @@ new Vue({
         },
         newOrder: function() {
             this.modalVisibility = false;
-            this.logs.push(logs('Заказ добавлен', 'Ok'));
+            this.logs.push(logs('Заказ добавлен ' + this.car.name , 'Ok'));
         },
         cancelOrder: function() {
             this.modalVisibility = false;
-            this.logs.push(logs('Заказ отменен', 'Cnl'));
+            this.logs.push(logs('Заказ отменен ' + this.car.name , 'Cnl'));
         }
     },
     computed: {
